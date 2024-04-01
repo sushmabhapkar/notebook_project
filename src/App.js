@@ -21,17 +21,19 @@ function App() {
   const filteredNotes = notes.filter(note =>
     note.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  return (
-    <div>
-      <h1>Note Taking App</h1>
-      <NoteForm onAddNote={handleAddNote} />
+  return(
+<div>
+      <h1>NoteBook</h1>
+      
       <SearchBar onSearch={setSearchTerm} />
-      <p>Total Notes: {notes.length}</p>
-      <p>No of search notes found: {filteredNotes.length}</p>
+      <strong><p>Total Notes:{notes.length}</p></strong> 
+      <strong><p>Showing: {filteredNotes.length}</p></strong>
+      
+      <NoteForm onAddNote={handleAddNote} />
+      
       <NoteList notes={filteredNotes} onDelete={handleDeleteNote} />
     </div>
   );
 }
-
 export default App;
+   
