@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import NoteForm from './Component/NoteForm';
+import NoteList from './Component/NoteList';
+import SearchBar from './Component/SearchBar';
+
 
 function App() {
+  const [notes, setNotes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleAddNote = (newNote) => {
+    setNotes([...notes, newNote]);
+  };
+
+  const handleDeleteNote = (index) => {
+    const updatedNotes = [...notes];
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
+  };
+
+  const filteredNotes = notes.filter(note =>
+    note.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Note Taking App</h1>
+      <NoteForm onAddNote={handleAddNote} />
+      <SearchBar onSearch={setSearchTerm} />
+      <p>Total Notes: {notes.length}</p>
+      <p>No of search notes found: {filteredNotes.length}</p>
+      <NoteList notes={filteredNotes} onDelete={handleDeleteNote} />
     </div>
   );
 }
